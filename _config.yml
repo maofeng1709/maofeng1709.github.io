@@ -1,13 +1,14 @@
 # Site settings
-title:          Tale
-description:    "Minimal Jekyll theme for storytellers"
-url:            "https://chesterhow.github.io"
+title:          Mao FENG
+description:    "My personal blog to record learnings and insights"
+url:            "https://maofeng1709.github.io"
 
 # Author
 author:
-  name:         Chester How
-  url:          https://chester.how
-  email:        chesterhow@gmail.com
+  name:         Mao FENG
+  email:        maofeng1709@gmail.com
+  github:       https://github.com/maofeng1709
+  linkedin:     https://www.linkedin.com/in/mao-feng-ba975a12b/
 
 # Build settings
 markdown:       kramdown

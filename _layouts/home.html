@@ -1,31 +1,16 @@
 ---
-layout: default
+layout: post
+title: "Short bio"
+author: "Mao FENG"
 ---
 
-<div class="catalogue">
-  {% for post in paginator.posts %}
-    <a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item">
-      <div>
-        <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
-        <h1 class="catalogue-title">{{ post.title }}</h1>
-        <div class="catalogue-line"></div>
-
-        <p>
-          {{ post.content | strip_html | truncatewords: 30 }}
-        </p>
-
-      </div>
-    </a>
-  {% endfor %}
-</div>
-
-<div class="pagination">
-  {% if paginator.previous_page %}
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
-  {% endif %}
-  {% if paginator.next_page %}
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
-  {% endif %}
-
-  <span>{{ paginator.page }}</span>
-</div>
+I got my engineer degree from the french "Grande Ecole" Telecom ParisTech and a master degree from the University of Pierre et Marie Curie (University of Paris VI), majored in Data Science. I got my bachelor degree from Nanjing university in Computer Science. Currently, I am working in a consulting firm as Data Scientist consultant on projects with respect to Machine learning / Deep learning.
+<br>
+<br>
+Thanks for reading!
+<hr>
+<h2>Contact & more<h2>
+<p><a href="{{ site.author.email | prepend: 'mailto:'}}" >Email</a></p>
+<p><a href="{{ site.author.github}}" >Github</a></p>
+<p><a href="{{ site.author.linkedin}}" >Linkedin</a></p>
+<p><a href="https://malphago-195815.appspot.com/" >Malphago, a rock-paper-scissors player with Q-learning</a></p>
