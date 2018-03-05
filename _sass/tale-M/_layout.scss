@@ -90,3 +90,39 @@ footer {
     font-size: .8rem;
   }
 }
+
+.contact {
+    color: $default-shade;
+    border-top: 1px solid $grey-2;
+	margin: 2rem 0 0 0;
+	text-align: center;
+
+  &-title {
+    font-family: $sans-serif;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+  }
+
+  &-info {
+    border-bottom: 1px solid $grey-2;
+    font-family: $serif-primary;
+    letter-spacing: 0.5px;
+    text-align: center;
+    font-size: 1rem;
+	margin-bottom: 1rem;
+
+  }
+
+  p a {
+		color: $default-color;
+		&:hover {
+			text-decoration: underline; 
+		}
+	}
+
+  a {
+	color: $default-tint;
+  }
+
+}

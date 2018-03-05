@@ -1,5 +1,5 @@
 .post {
-  padding: 3rem 0;
+  padding: 3rem 1rem 0;
 
   &-info {
     color: $default-tint;
@@ -18,13 +18,20 @@
     font-size: 2rem;
     margin: 1rem 0;
     text-align: center;
+	&:hover + .post-line,
+    &:focus + .post-line {
+      width: 10rem;
+    }
+
   }
 
   &-line {
+    @include transition(all .5s ease-out);
     border-top: 0.4rem solid $default-shade;
+    font-family: $sans-serif;
     display: block;
     margin: 0 auto 3rem;
-    width: 4rem;
+    width: 6rem;
   }
 
   p {

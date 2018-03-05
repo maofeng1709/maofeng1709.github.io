@@ -1,16 +1,23 @@
 ---
-layout: post
-title: "Short bio"
-author: "Mao FENG"
+layout: default
 ---
 
-I got my engineer degree from the french "Grande Ecole" Telecom ParisTech and a master degree from the University of Pierre et Marie Curie (University of Paris VI), majored in Data Science. I got my bachelor degree from Nanjing university in Computer Science. Currently, I am working in a consulting firm as Data Scientist consultant on projects with respect to Machine learning / Deep learning.
-<br>
-<br>
-Thanks for reading!
-<hr>
-<h2>Contact & more<h2>
-<p><a href="{{ site.author.email | prepend: 'mailto:'}}" >Email</a></p>
-<p><a href="{{ site.author.github}}" >Github</a></p>
-<p><a href="{{ site.author.linkedin}}" >Linkedin</a></p>
-<p><a href="https://malphago-195815.appspot.com/" >Malphago, a rock-paper-scissors player with Q-learning</a></p>
+<div class="post">
+
+  <h1 class="post-title">{{ page.title }}</h1>
+  <div class="post-line"></div>
+
+  {{ content }}
+
+</div>
+
+<div class="contact">
+	<h1 class="contact-title">Contact & more</h1>
+	<div class="contact-info">
+	<p><a href="{{ site.author.email | prepend: 'mailto:'}}" >Email</a></p>
+	<p><a href="{{ site.author.github}}" >Github</a></p>
+	<p><a href="{{ site.author.linkedin}}" >Linkedin</a></p>
+	<p><a href="https://malphago-195815.appspot.com/" >Malphago, a rock-paper-scissors player with Q-learning</a></p>
+	</div>
+	<a href="#" class="top">Top</a>
+</div>
