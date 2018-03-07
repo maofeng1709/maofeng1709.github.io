@@ -23,6 +23,10 @@ plugins:
   - jekyll-paginate
 
 # Permalinks
-permalink:      /:year-:month-:day/:title
-paginate:       5
+permalink:      /:categories/:year-:month-:day/:title
+
+
+#pagination
+paginate:       1
 paginate_path: "/posts/page:num/"
+

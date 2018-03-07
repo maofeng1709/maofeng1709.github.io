@@ -1,0 +1,94 @@
+---
+layout: default
+---
+
+{% include get_category.html %}
+
+<div class="category">
+	<ul class='left'>
+		<li>&#9656&nbsp <li>
+		{% if category %}
+		<li><a href="{{path}}">{{category}}</a></li>	
+		{% else %}
+		<li><a href="{{path_1}}">{{category_1}}</a></li>
+		<li>&#9656&nbsp <li>
+		<li><a href="{{path_2}}">{{category_2}}</a></li>	
+		{% endif %}
+	</ul>
+	<ul class="right">
+		<li><a href='/posts'> All </a></li>
+		<li><a href='/posts/courses/'> Courses &#9662</a>
+			<ul class="sub-category">
+				{% for sub_category in site.data.categories['courses'] %}
+				<li><a href="{{'/posts/courses/' | append: sub_category}}">{{sub_category}}</a></li>
+				{% endfor %}
+			</ul>
+		</li>
+		<li><a href='/posts/readings'> Readings &#9662 </a>
+			<ul class="sub-category">
+				{% for sub_category in site.data.categories['readings'] %}
+				<li><a href="{{'/posts/readings/' | append: sub_category}}">{{sub_category}}</a></li>
+				{% endfor %}
+			</ul>
+		</li>
+		<li><a href='/posts/projects'> Projects </a>
+			<!--
+			<ul class="sub-category">
+				{% for sub_category in site.data.categories['projects'] %}
+				<li><a href="{{'/posts/projects/' | append: sub_category}}">{{sub_category}}</a></li>
+				{% endfor %}
+			</ul>
+			-->
+		</li>
+		<li><a href='/posts/others'> Others </a>
+			<!--
+			<ul class="sub-category">
+				{% for sub_category in site.data.categories['others'] %}
+				<li><a href="{{'/posts/others/' | append: sub_category}}">{{sub_category}}</a></li>
+				{% endfor %}
+			</ul>
+			-->
+		</li>
+	</ul>
+</div>
+
+
+{% if page.category %}
+	{% assign posts = site.categories[page.category] %}
+{% else %}
+	{% assign posts = site.posts%}
+{% endif %}
+
+<div class="catalogue">
+  {% for post in posts %}
+    <a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item">
+      <div>
+        <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
+        <h1 class="catalogue-title">{{ post.title }}</h1>
+        <div class="catalogue-line"></div>
+
+        <p>
+          {{ post.content | strip_html | truncatewords: 30 }}
+        </p>
+
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+<!--
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="left arrow">&#8592;</a>
+  {% endif %}
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
+  {% endif %}
+
+  <span>{{ paginator.page }}</span>
+</div>
+-->
+
+<div class="pagination">
+  <a href="#" class="top">Top</a>
+</div>

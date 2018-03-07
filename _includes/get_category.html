@@ -1,0 +1,15 @@
+
+{% assign paths = page.url | split: '/'%}
+{% assign len = paths | size %}
+{% if len == 2 %}
+	{% assign category = 'All'%}
+	{% assign path = '/posts' %}
+{% elsif len == 3 %}
+	{% assign category = paths[2]%}
+	{% assign path = '/posts/' | append: category%}
+{% elsif len == 4 %}
+	{% assign category_1 = paths[2]%}
+	{% assign path_1 = '/posts/' | append: category_1%}
+	{% assign category_2 = paths[3] | replace: '%20', ' '%}
+	{% assign path_2 = path_1 | append: '/' | append: category_2%}
+{% endif %}
