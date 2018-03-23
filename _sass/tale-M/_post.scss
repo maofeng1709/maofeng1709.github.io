@@ -56,3 +56,22 @@
     text-align: center;
   }
 }
+
+.post-table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    border:2px solid $default-tint;
+	margin: 20px auto 20px auto;
+
+	th{
+		border:2px solid $default-tint;
+		padding: 5px;
+	}
+
+	td{
+		border:1px solid $default-tint;
+		padding: 5px;
+	}
+}
+
+

@@ -30,3 +30,6 @@ permalink:      /:categories/:year-:month-:day/:title
 paginate:       1
 paginate_path: "/posts/page:num/"
 
+
+linenos: true
+
