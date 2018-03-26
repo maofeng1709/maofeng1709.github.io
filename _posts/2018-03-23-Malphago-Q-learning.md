@@ -111,7 +111,7 @@ As is shown in the algorithm, we set the target value $$y_j$$ for function $$Q_{
 
 ## 6. Serve tensorflow model with Flask
 
-The main obstacle is serving tensorflow model for each flask session. Flask-session stores session information at server side for each session id but the tensorflow objects can not be stored normally. The solution here is to only store parameters of a tensorflow graph as python list. Every time the server receive a request, it opens a tensorflow session and rebuild the graph from the stored parameters and then perform tensorflow operations.
+The main obstacle is serving tensorflow model for each flask session. Flask-session stores session information at server side for each session id but the tensorflow objects(graph ans session) can not be stored normally. The solution here is to only store parameters of a tensorflow graph as python list. Every time the server receive a request, we create a temporary `graph = tf.Graph()` and set it to default by `with graph.as_default():`. We rebuild the Q-function graph from the stored parameters and open a `tf.Session()` to perform operations. Before leaving the request handling function, use `tf.reset_default_graph()` to delete all the element of this temporary graph.
 
 ## 7. Conclusions
 
