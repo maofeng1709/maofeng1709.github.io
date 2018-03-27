@@ -97,7 +97,7 @@ We'll have 3 $$Q_a(\phi(s))$$ for each $$a \in $$ (rock, paper, scissors), defin
 def deep_Q(X, tf_variable):
     W1, b1, W2, b2 = tf_variable
     hidden = tf.tanh(tf.matmul(X, W1) + b1)
-    y_pred = tf.sigmoid(tf.matmul(hidden, W2) + b2)
+    y_pred = 2 * tf.sigmoid(tf.matmul(hidden, W2) + b2)
     return y_pred
 {%endhighlight%}
 
