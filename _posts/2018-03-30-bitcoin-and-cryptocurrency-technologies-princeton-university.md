@@ -15,5 +15,5 @@ Security properties:
 
 - **hiding.** We want: Given $$H(x)$$, it is infeasible to find $$x$$. Hiding property: if $$r$$ is chosen from a probability distribution that has *high min-entropy*, then given $$H(r \mid x)$$ (r concatenated with x), it is infeasible to find x. *High min-entropy* means no particular value is chosen with more than negligible probability. Application: seal a message an envelope: `commit(msg) = (com, key) = (H(key|msg), H(key)) ` where key is a random 256-bit value, then publish key and msg, only people who hold the correct com can open the massage.
 
-- **puzzle friendly. ** For every possible output value $$y$$, if $$k$$ chosen from a distribution with high min-entropy, then it is infeasible to find $$x$$ such that $$H(k \mid x) = y$$. (Difference with hiding property: to find one $$x$$ doesn't mean finding the input $$x$$, there many possibles $$x$$s but it's infeasible to find one.).
+- **puzzle friendly.** For every possible output value $$y$$, if $$k$$ chosen from a distribution with high min-entropy, then it is infeasible to find $$x$$ such that $$H(k \mid x) = y$$. (Difference with hiding property: to find one $$x$$ doesn't mean finding the input $$x$$, there many possibles $$x$$s but it's infeasible to find one.).
 ## 2. Intro to cryptocurrencies
