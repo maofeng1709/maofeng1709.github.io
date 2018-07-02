@@ -21,11 +21,11 @@ across languages even for distant languages. Since then many studies are conduct
 ### 2. Model
 Suppose that we have $$n$$ pair of words $$\{x_i, y_i\}_{i\in\{1,n\}}$$ and want to learn a mapping from the source to the target space such that
 
-$$W^\star = \operatorname{argmin}_{W \in M_d(\mathbb{R})} ||WX-Y||_F$$
+$$W^\star = \underset{W \in M_d(\mathbb{R})}{\operatorname{argmin}} ||WX-Y||_F$$
 
 In practice, the result improves if we enforce an orthogonal constraint on $$W$$.
 
-$$W^\star = \operatorname{argmin}_{W \in O_d(\mathbb{R})} ||WX-Y||_F = UV^T, \text{ with } U\Sigma V^T = SVD(YX^T)$$
+$$W^\star = \underset{W \in O_d(\mathbb{R})}{\operatorname{argmin}} ||WX-Y||_F = UV^T, \text{ with } U\Sigma V^T = SVD(YX^T)$$
 
 This equation is so-called the Procrustes problem, which advantageously offers a closed form solution obtained from the singular value decomposition(SVD).
 
@@ -40,6 +40,7 @@ $$\mathcal{L}_D(\theta_D|W) = -\frac{1}{n}\sum_{i=1}^n \log P_{\theta_D}(\text{s
 
 - **A mapping** who prevent the discriminator from making accurate predictions.
 
+$$\sum_{1}^{n}$$
 
 #### 2.2 Refinement
 
