@@ -7,7 +7,7 @@ categories: [projects]
 
 ## 1. Overview
 	
-[Malphago](malphago-195815.appspot.com) is a Q-learning agent for the simple game rock-paper-scissors served by Flask web application. The purpose of this project is to test Q-learning's performance in an interactive environment. In the meantime, [Deep Malphago](https://malphago-195815.appspot.com/DeepMalphago) is developed with deep Q-learning algorithm with tensorflow nn models, which is inspired by Deepmind's paper [Playing atari with deep reinforcement learning](https://arxiv.org/pdf/1312.5602.pdf).
+[Malphago](malphago-195815.appspot.com) is a Q-learning agent for the simple game rock-paper-scissors served by Flask web application. The purpose of this project is to test Q-learning's performance in an interactive environment. In the meantime, [Deep Malphago](https://malphago-margo.appspot.com/DeepMalphago) is developed with deep Q-learning algorithm with tensorflow nn models, which is inspired by Deepmind's paper [Playing atari with deep reinforcement learning](https://arxiv.org/pdf/1312.5602.pdf).
 	
 <iframe style="width: 100%; height: 705px; border: none;" src="https://malphago-195815.appspot.com/" width="100%" height="705"></iframe> 
 	
