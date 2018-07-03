@@ -40,9 +40,15 @@ $$\mathcal{L}_D(\theta_D|W) = -\frac{1}{n}\sum_{i=1}^n \log P_{\theta_D}(\text{s
 
 - **A mapping** who prevent the discriminator from making accurate predictions.
 
-$$\sum_{1}^{n}$$
+$$\mathcal{L}(W|\theta_D) = -\frac{1}{n}\sum_{i=1}^n \log P_{\theta_D}(\text{source}=0|Wx_i)-\frac{1}{m}\sum_{i=1}^m \log P_{\theta_D}(\text{source}=1|y_i)$$
+
+The model is then trianed by the standard training procedure of deep adversarial networks of [Goodfelloww et al. (2014)].
 
 #### 2.2 Refinement
+
+The result obtained by the DAN is not on par with supervised approach. Low frequency words are hard to align because they are more likely to appear in different contexts. 
+
+The idea is to find some most frequent words as anchors to refine the mapping. A synthetic parallel vocabulary is built using only the **mutual nearest neighbors**. Then, apply the Procrustes algorithm to iteratively improve the accuracy.
 
 #### 2.3 CROSS-DOMAIN SIMILARITY LOCAL SCALING (CSLS)
 
