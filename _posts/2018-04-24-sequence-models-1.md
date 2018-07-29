@@ -15,111 +15,74 @@ For a simple RNN structure:
 	- internal states: $$s_{t+1} = g(W_s\cdot[x_t, s_t] + b_s)$$ where $$g$$ is an activation function e.g. `tanh` or `ReLU`
 	- outputs: $$\hat{y}_t = f(W_y\cdot s_t + b_y) $$ where $$f$$ is another activation function, which could be `softmax` or `sigmoid`
 - backward
-	- labels: sequential values $y_1, y_2, ... y_n$
-	- loss fucntion: 
+	- labels: sequential values $$y_1, y_2, ... y_n$$
+	- loss fucntion: cross-entropy ...
 
-### 1.1. cryptographic hash functions
-takes any string as input, fixed-size output, efficiently computable.
+### Different types of RNNs
 
-Security properties:
-- **collision-free.** No body can find $$x$$ and $$y$$ such that $$x \neq y$$ and $$H(x) = H(y)$$. While collisions do exist but it's not findable by regular people with regular machines. No hash function is proved to be collision-free but people choose to believe some are collision-free because they tried hard to find collisions but didn't succeeded. Application: Hash as message digest. If we know $$H(x) = H(y)$$ it's safe to assume that $$x = y$$.
+- many to many: language model
+- many ro one: move rating
+- on to many: music generation
+- many to many with different input/output length: machine translation
 
-  ![]({{site.url}}/assets/image/Collisions_do_exist.png){:width="300px"}_collisions do exist_
+  ![]({{site.url}}/assets/image/machine_translation.png){:width="300px"}_machine translation: many to many model_
+  
+### Language model and sequence generation
 
-- **hiding.** We want: Given $$H(x)$$, it is infeasible to find $$x$$. Hiding property: if $$r$$ is chosen from a probability distribution that has *high min-entropy*, then given $$H(r \mid x)$$ (r concatenated with x), it is infeasible to find x. *High min-entropy* means no particular value is chosen with more than negligible probability. Application: seal a message an envelope: `commit(msg) = (com, key) = (H(key|msg), H(key)) ` where key is a random 256-bit value, then publish key and msg, only people who hold the correct com can open the massage.
+### Vanishing gradients with RNNs
+RNN with large number of layers can hardly capture the long-term dependency due to vanishing gradients. -- gradients could decrease exponetially during the backpropagation. 
 
-- **puzzle friendly.** For every possible output value $$y$$, if $$k$$ chosen from a distribution with high min-entropy, then it is infeasible to find $$x$$ such that $$H(k \mid x) = y$$. (Difference with hiding property: to find one $$x$$ doesn't mean finding the input $$x$$, there many possibles $$x$$s but it's infeasible to find one.). Application: Search puzzle. Given a "puzzle ID" _id_ (from high min-entropy distribution) and a target set $$Y$$, try to find a "solution" $$x$$ such that $$H(id \mid x) \in Y$$. Puzzle friendly property implies that no solving strategy is much better than trying random values of x.
+- exploding gradients can be solved robustly by gradient clipping, i.e. if gradient is larger than a threshold, rescale it.
+- vanishing gradients have not simple solution, but architectures like GRU/LSTM are used to mitigate it.
 
-Bitcoin use SHA-256 hash function:
+### Gated Recurrent Unit.
 
-![]({{site.url}}/assets/image/SHA-256.png){:width="300px"}_SHA-256 hash function_
+Simplified version:
 
-> Theorem: if $$c$$ is collision-free, the SHA-256 is collision-free.
+$$\tilde{c}^{<t>} = tanh(W_c[c^{<t-1>}, x^{<t>}] + b_c)$$
 
-### 1.2. Hash Pointers and Data Structures
-A hash pointer tells where some info is stored and what is the (cryptographic) hash of the info. We can ask to get the info back and verify that it hasn't changed with the hash pointer.
+$$\Gamma_u = \sigma(W_u[c^{<t-1>}, x^{<t>}] + b_u)$$
 
-key idea: build data structures with hash pointers.
+$$c^{<t>} = \Gamma_u * \tilde{c}^{<t>} + (1-\Gamma_u)*c^{<t-1>}$$
 
-![]({{site.url}}/assets/image/hash_pointer.png){:width="300px"}_hash pointer for detecting tempering_
+$$\Gamma$$ is the gate to determine how much and which dimensions of the current candidate vector is updated to the memory cell $$c^{<t>}$$. Ideally, if the long-term dependent info is stored in the cell and irrelative inputs are ignored, this dependency may be captured even if it happens before many inputs.
 
-If any one wants to tamper one block, he has to temper all the precedent hash pointers all the way to the beginning, because every block is checked by it's previous block's hash pointer. Suppose we remember the head hash pointer so that we can easily detect the tempering.
+The Full GRU:
 
-![]({{site.url}}/assets/image/merkle_tree.png){:width="300px"}_hash pointer for merkle tree_
+$$\tilde{c}^{<t>} = tanh(W_c[\Gamma_r * c^{<t-1>}, x^{<t>}] + b_c)$$
 
-Another example is the binary tree (`merkle tree`) with hash pointer
+$$\Gamma_u = \sigma(W_u[c^{<t-1>}, x^{<t>}] + b_u)$$
 
-![]({{site.url}}/assets/image/merkle_tree_search.png){:width="300px"}_merkle tree search_
+$$\Gamma_r = \sigma(W_r[c^{<t-1>}, x^{<t>}] + b_r)$$
 
-For proving a data block is in a `merkle tree`, we only need show $$O(log(n))$$ hash pointers.
+$$c^{<t>} = \Gamma_u * \tilde{c}^{<t>} + (1-\Gamma_u)*c^{<t-1>}$$
 
-More generally, we can use hash pointers in any pointer-based data structure that has no cycles.
+$$a^{<t>} = c^{<t>}$$
 
-### 1.3. Digital signatures
+where $$a^{<t>}$$ is the output value.
 
-Only you can sign, but anyone can verify. Signature is tied to a particular document and it can't be cut-and-pasted to another doc.
+The Full version is the result of many researches and experiments, adding a relavance gate $$\Gamma_r$$ to tell whether thepreviouscell is relavant to calculate the candidate cell.
 
-API for digital signatures:
+### LSTM
 
-```
-(sk, pk) = generateKeys(keysize)
-sk: secret signing key
-pk: public verification key
+Indeed LSTM is a more general version of GRU, adding a forget gate $$\Gamma_f$$ to replace $$(1-\Gamma_u)$$ and another output gate $$\Gamma_o$$ to filter cell value to output value.
 
-sig = sign(sk, message)
+$$\tilde{c}^{<t>} = tanh(W_c[c^{<t-1>}, x^{<t>}] + b_c)$$
 
-isValid = verify(pk, message, sig)
-```
+$$\Gamma_u = \sigma(W_u[a^{<t-1>}, x^{<t>}] + b_u)$$
 
-Bitcoin uses `ECDSA` standard: Elliptic Curve Digital Signature Algorithms, which relies on hairy math.
+$$\Gamma_f = \sigma(W_f[a^{<t-1>}, x^{<t>}] + b_f)$$
 
-### 1.4. Public key as identities
+$$\Gamma_o = \sigma(W_o[a^{<t-1>}, x^{<t>}] + b_o)$$
 
-public key == an identity: because with `pk` people can verify any message with `sig` generated by `sk` is. `pk` serves as an identity of your messages. (not `sig` because `sig` is not same for different messages).
+$$c^{<t>} = \Gamma_u * \tilde{c}^{<t>} + \Gamma_f*c^{<t-1>}$$
 
-To make a new identity, it's enough to create a new random key-pair `(sk, pk)`. `pk` is the "name" that you can use and `sk` lets you "speak for" the identity.
+$$a^{<t>} = \Gamma_o * c^{<t>}$$
 
-Decentralized identity can be realized in this way because anybody can make a new identity as anytime and we don't need central point of coordination. These identities are called "addresses" in Bitcoin.
+### Bidirectional RNN
 
-Privacy issues:
-- Addresses not directly connected to real-world identity. No one knows who you are behind this address initially.
-- But observer can link together an address's activities over time and make inferences to guess who you are.
+At each timestamp, calculate the output value from 2 directions. $$y^{<t>}$$ depends on both $$\overrightarrow{a}^{<t>}$$ and $$\overleftarrow{a}^{<t>}$$ :
 
-### 1.5. A simple Cryptocurrency
+$$$y^{<t>} = g(W_y[\overrightarrow{a} ^{<t>}, \overleftarrow{a} ^{<t>}] + b_y)$$
 
-GoofyCoin Rules:
-1. Goofy can create new coins and new coin belongs to Goofy.
-2. A coin's owner can spend it.
-
-![]({{site.url}}/assets/image/goofycoin.png){:width="300px"}_GoofyCoin creation and spending_
-
-As shown in the above graph, a data structure represents an operation. From the bottom, Goofy creates a coin and **signed by pk<sub>Goofy</sub>**. Here as far as I understand, it means **signed by sk<sub>Goofy</sub>** and the **sig<sub>Goofy</sub>** is bundled with **pk<sub>Goofy</sub>** for verification by others. The second data block means this coin is payed to Alice with Goofy's `sig` and `pk` to make the payment valid. And then this coin is payed to Bob from Alice as the top block shows with the identity of Alice.
-
-![]({{site.url}}/assets/image/double_spending_attack.png){:width="300px"}_double spending attack_
-
-The main problem of GoofyCoin is double spending attack. Alice can pay this coin to Bob and Chuck but none of them can notice the coin is already payed to the other. 
-
-The double-spending attack is actually the main design challenge in digital currency. ScroogeCoin is designed to solve this problem.
-
-Scrooge uses a block chain to store the history of all transactions.
-
-![]({{site.url}}/assets/image/scroogecoin.jpeg){:width="300px"}_ScroogeCoin block chain_
-
-For simplicity, every block only contains one transaction. Double-spending can't be detect by looking into the history and everyone would reject double spending transaction.
-
-A ScroogeCoin transaction can be `CreateCoin` or  `PayCoin`. 
-
-![]({{site.url}}/assets/image/scrooge_create_coin.png){:width="300px"}_ScroogeCoin CreateCoin_
-
-A `CreateCoin` transaction is valid because Scrooge put it into the history, that's the basic rule of the system. Here the basic unit is ScroogeCoin, each created coin worth a certain numbers (value) of ScroogeCoins.
-
-![]({{site.url}}/assets/image/scrooge_pay_coin.png){:width="300px"}_ScroogeCoin PayCoin_
-
-A `PayCoin` transaction valid if the 4 conditions in the above image are satisfied. So the double-spending and security issues can be solved. The coin is immutable but one can get the same effect by using transactions. E.g. To subdivide a coin equals to create new trans that consume this coin and than pay out 2 new coins with same total value to himself.
-
-The problem of ScroogeCoin is the centralization of Scrooge's credit. This is discussed in the next lectures.
-
-
-
-
-
+### Deep RNN
