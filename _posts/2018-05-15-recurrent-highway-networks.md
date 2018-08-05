@@ -27,7 +27,7 @@ to an RNN.
 
 ### 3. Gradient Flow in Recurrent Networks
 
-Consider a standard RNN $$y^{[t]} = f(Wx^{[t]} + Ry^[t-1]) + b$$. The derivative of the loss $$\mathcal{L}$$ with respect to parameters $$\theta$$ can be written using the chain rule:
+Consider a standard RNN $$y^{[t]} = f(Wx^{[t]} + Ry^{[t-1]} + b$$. The derivative of the loss $$\mathcal{L}$$ with respect to parameters $$\theta$$ can be written using the chain rule:
 
 $$\frac{d\mathcal{L}}{d\theta} = \sum_{1\leq t_2\leq T}\frac{d\mathcal{L}^{[t_2]}}{d\theta} = \sum_{1\leq t_2\leq T }\sum_{1\leq t_1\leq t_2}\frac{\partial \mathcal{L}^{[t_2]}}{\partial y^{[t_2]}}\frac{\partial y^{[t_2]}}{\partial y^{[t_1]}}\frac{\partial y^{[t_1]}}{\partial \theta}$$
 
@@ -58,7 +58,7 @@ As illustrated as GTC, some models proposed to initialize $$R$$ with an identity
 In this section, the author porpose Recurrent Highway Networks inspired by the RNN with Highway layers.
 
 Recall:
-- Highway layer: $$y = h\cdot t + x\cdot c$$, where "." denotes element-wise multiplication, $$h = H(x, W_H)$$, $$t = T(x, W_T)$$, $$c = (x, W_C)$$.
+- Highway layer: $$y = h\cdot t + x\cdot c$$, where "." denotes element-wise multiplication, $$h = H(x, W_H)$$, $$t = T(x, W_T)$$, $$c = C(x, W_C)$$.
 - A standard RNN: $$y^{[t]} = f(Wx^{[t]} + Ry^{[t-1]}) + b$$
 
 Then an RHN layer with a recurrence depth of $$L$$ is described by:
