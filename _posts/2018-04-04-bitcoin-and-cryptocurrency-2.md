@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cryptocurrency course of Princeton university: Lecture 2 - How Bitcoin Achieves Decentralization"
+title: "Cryptocurrency course of Princeton university: How Bitcoin Achieves Decentralization"
 date: 2018-04-04
 categories: [courses, blockchain]
 ---
