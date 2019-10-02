@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cryptocurrency course of Princeton university: Lecture 1 - Intro to crypto and cryptocurrencies"
+title: "Cryptocurrency course of Princeton university: Intro to crypto and cryptocurrencies"
 date: 2018-03-30
 categories: [courses, blockchain]
 ---
