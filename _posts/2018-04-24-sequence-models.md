@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Sequence Models by Andrew Ng: Week 1 - Recurrent Neural Networks"
+title: "Sequence Models by Andrew Ng: Recurrent Neural Networks"
 date: 2018-04-24
 categories: [courses, deep learning, sequence models]
 ---
